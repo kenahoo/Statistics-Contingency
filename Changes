@@ -1,6 +1,6 @@
 Revision history for Perl extension Statistics::Contingency.
 
-0.06
+0.06  Sat Feb  8 12:18:54 CST 2003
 
  - The output of stats_table() will now auto-expand to show 3
    significant digits in all data elements, or however many is
