@@ -1,5 +1,5 @@
 package Statistics::Contingency;
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 use strict;
 
@@ -179,38 +179,42 @@ Statistics::Contingency - Calculate precision, recall, F1, accuracy, etc.
 =head1 SYNOPSIS
 
  use Statistics::Contingency;
- my $e = new Statistics::Contingency;
- my $l = AI::Categorizer::Learner->restore_state(...path...);
+ my $s = new Statistics::Contingency;
  
- while (...) {
-   my $d = ... get document ...
-   my $h = $l->categorize($d);
-   $e->add_hypothesis($h, [$d->categories]);
+ while (...something...) {
+   ...
+   $s->add_result($assigned_labels, $correct_labels);
  }
  
- print "Micro F1: ", $e->micro_F1, "\n"; # Access a single statistic
- print $e->stats_table; # Show several stats in table form
+ print "Micro F1: ", $s->micro_F1, "\n"; # Access a single statistic
+ print $s->stats_table; # Show several stats in table form
 
 =head1 DESCRIPTION
 
-The C<Statistics::Contingency> class helps you organize the
-results of categorization experiments.  As you get lots of
-categorization results (Hypotheses) back from the Learner, you can
-feed these results to the Experiment class, along with the correct
-answers.  When all results have been collected, you can get a report
-on accuracy, precision, recall, F1, and so on, with both
-macro-averaging and micro-averaging over categories.
+The C<Statistics::Contingency> class helps you calculate several
+useful statistical measures based on 2x2 "contingency tables".  I use
+these measures to help judge the results of automatic text
+categorization experiments, but they are useful in other situations as
+well.
+
+The general usage flow is to tally a whole bunch of results in the
+C<Statistics::Contingency> object, then query that object to obtain
+the measures you are interested in.  When all results have been
+collected, you can get a report on accuracy, precision, recall, F1,
+and so on, with both macro-averaging and micro-averaging over
+categories.
 
 =head2 Macro vs. Micro Statistics
 
 All of the statistics offered by this module can be calculated for
 each category and then averaged, or can be calculated over all
-decisions and then averaged.  The former is called macro-averaging,
-and the latter is called micro-averaging.  They bias the results
+decisions and then averaged.  The former is called macro-averaging
+(specifically, macro-averaging with respect to category), and the
+latter is called micro-averaging.  The two procedures bias the results
 differently - micro-averaging tends to over-emphasize the performance
 on the largest categories, while macro-averaging over-emphasizes the
-performance on the smallest.  It's usually best to look at both
-of them to get a better idea of how your categorizer is performing.
+performance on the smallest.  It's often best to look at both of them
+to get a good idea of how your data distributes across categories.
 
 =head2 Statistics available
 
@@ -266,13 +270,13 @@ expressed as C<2a/(2a+b+c)>.  It falls in the range from 0 to 1, with
 
 =back
 
-The F1 measure is probably the only simple measure that is worth
-trying to maximize on its own - consider the fact that you can get a
-perfect precision score by always assigning zero categories, or a
-perfect recall score by always assigning every category.  A truly
-smart system will assign the correct categories and only the correct
-categories, maximizing precision and recall at the same time, and
-therefore maximizing the F1 score.
+The F1 measure is often the only simple measure that is worth trying
+to maximize on its own - consider the fact that you can get a perfect
+precision score by always assigning zero categories, or a perfect
+recall score by always assigning every category.  A truly smart system
+will assign the correct categories and only the correct categories,
+maximizing precision and recall at the same time, and therefore
+maximizing the F1 score.
 
 Sometimes it's worth trying to maximize the accuracy score, but
 accuracy (and its counterpart error) are considered fairly crude
@@ -281,9 +285,9 @@ categorizer.
 
 =head1 METHODS
 
-The general execution flow when using this class is to create an
-Experiment object, add a bunch of Hypotheses to it, and then report on
-the results.
+The general execution flow when using this class is to create a
+C<Statistics::Contingency> object, add a bunch of results to it, and
+then report on the results.
 
 =over 4
 
@@ -301,50 +305,56 @@ only one category.
 
 If you've already got the lists in hash form, this will be the fastest
 way to pass them.  Otherwise, the current implementation will convert
-them to hash form internally.
+them to hash form internally in order to make its calculations
+efficient.
 
-The C<$name> parameter is a name for this result, it will only be used
-in error messages or debugging/progress output.
+The C<$name> parameter is an optional name for this result.  It will
+only be used in error messages or debugging/progress output.
+
+In the current implementation, we only store the contingency tables
+per category, as well as a table for the entire result set.  This
+means that you can't recover information about any particular single
+result from the C<Statistics::Contingency> object.
 
 =item * $e->micro_accuracy
 
-Returns the micro-averaged accuracy for the Experiment.
+Returns the micro-averaged accuracy for the data set.
 
 =item * $e->micro_error
 
-Returns the micro-averaged error for the Experiment.
+Returns the micro-averaged error for the data set.
 
 =item * $e->micro_precision
 
-Returns the micro-averaged precision for the Experiment.
+Returns the micro-averaged precision for the data set.
 
 =item * $e->micro_recall
 
-Returns the micro-averaged recall for the Experiment.
+Returns the micro-averaged recall for the data set.
 
 =item * $e->micro_F1
 
-Returns the micro-averaged F1 for the Experiment.
+Returns the micro-averaged F1 for the data set.
 
 =item * $e->macro_accuracy
 
-Returns the macro-averaged accuracy for the Experiment.
+Returns the macro-averaged accuracy for the data set.
 
 =item * $e->macro_error
 
-Returns the macro-averaged error for the Experiment.
+Returns the macro-averaged error for the data set.
 
 =item * $e->macro_precision
 
-Returns the macro-averaged precision for the Experiment.
+Returns the macro-averaged precision for the data set.
 
 =item * $e->macro_recall
 
-Returns the macro-averaged recall for the Experiment.
+Returns the macro-averaged recall for the data set.
 
 =item * $e->macro_F1
 
-Returns the macro-averaged F1 for the Experiment.
+Returns the macro-averaged F1 for the data set.
 
 =item * $e->stats_table
 
@@ -354,11 +364,10 @@ less space to print.
 
 =item * $e->category_stats
 
-Returns a hash reference whose keys are the names of each category.
-The values are hash references whose keys are the names of various
-statistics (accuracy, error, precision, recall, or F1) and whose
-values are the measures themselves.  For example, to print a single
-statistic:
+Returns a hash reference whose keys are the names of each category,
+and whose values contain the various statistical measures (accuracy,
+error, precision, recall, or F1) about each category as a hash reference.  For
+example, to print a single statistic:
 
  print $e->category_stats->{sports}{recall}, "\n";
 
@@ -380,9 +389,9 @@ Ken Williams <kenw@ee.usyd.edu.au>
 
 =head1 COPYRIGHT
 
+Copyright 2002 Ken Williams.  All rights reserved.
+
 This distribution is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.  These terms apply to
-every file in the distribution - if you have questions, please contact
-the author.
+modify it under the same terms as Perl itself.
 
 =cut
