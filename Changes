@@ -8,8 +8,8 @@ Revision history for Perl extension Statistics::Contingency.
    edge case isn't discussed in the literature I've seen.  Note that
    with this change, the macro-precision will typically be reported as
    a lower number than before (but the micro-precision usually won't
-   change).  Recall and F1 aren't affected by this change, nor are
-   error and accuracy.
+   change).  Recall and F1 aren't affected by this change (they're
+   both still 0), nor are error and accuracy.
 
  - Tests have been added to ensure the above changes stick.
 
