@@ -168,12 +168,12 @@ sub stats_table {
   for (@data) {
     $m = length() if length() > $m;
   }
-  my $s = ' ' x ($m - 3);
+  my $s = ' ' x ($m - 4);
   
-  my $out = "+" . ("-" x (16 + 7*$m)) . "+\n";
-  $out   .= "|$s maR $s maP$s maF1  $s miR $s miP$s miF1  $s Err |\n";
-  $out   .= "| %${m}s  %${m}s  %${m}s   %${m}s  %${m}s  %${m}s   %${m}s |\n";
-  $out   .= "+" . ("-" x (16 + 7*$m)) . "+\n";
+  my $out = "+" . ("-" x (10 + 7*$m)) . "+\n";
+  $out   .= "| $s maR $s maP$s maF1  $s miR $s miP$s miF1  $s Err |\n";
+  $out   .= "| %${m}s %${m}s %${m}s  %${m}s %${m}s %${m}s  %${m}s |\n";
+  $out   .= "+" . ("-" x (10 + 7*$m)) . "+\n";
 
   return sprintf($out, @data);
 }
