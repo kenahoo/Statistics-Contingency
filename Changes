@@ -1,5 +1,10 @@
 Revision history for Perl extension Statistics::Contingency.
 
+0.05
+
+ - Since miE and maE are the same, don't print both in the
+   stats_table() method.
+
 0.04  Wed Sep 18 19:06:01 AEST 2002
 
  - A precision edge case has been changed.  Now, if no categories were
