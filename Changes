@@ -1,6 +1,19 @@
 Revision history for Perl extension Statistics::Contingency.
 
-0.03
+0.04  Wed Sep 18 19:06:01 AEST 2002
+
+ - A precision edge case has been changed.  Now, if no categories were
+   assigned, and some categories should have been assigned, the
+   precision is returned as 0.  Previous versions returned 1.  This
+   edge case isn't discussed in the literature I've seen.  Note that
+   with this change, the macro-precision will typically be reported as
+   a lower number than before (but the micro-precision usually won't
+   change).  Recall and F1 aren't affected by this change, nor are
+   error and accuracy.
+
+ - Tests have been added to ensure the above changes stick.
+
+0.03  Wed Aug  7 23:53 AEST 2002
 
  - Corrected some documentation errors
 
