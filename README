@@ -61,10 +61,15 @@ DESCRIPTION
         It is defined as "(a+d)/(a+b+c+d)". It falls in the range from 0 to 1,
         with 1 being the best score.
 
+        Note that macro-accuracy and micro-accuracy will always give the same
+        number.
+
     * error
         This measures the portion of all decisions that were incorrect
         decisions. It is defined as "(b+c)/(a+b+c+d)". It falls in the range
         from 0 to 1, with 0 being the best score.
+
+        Note that macro-error and micro-error will always give the same number.
 
     * precision
         This measures the portion of the assigned categories that were correct.
