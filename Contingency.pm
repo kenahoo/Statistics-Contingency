@@ -1,5 +1,5 @@
 package Statistics::Contingency;
-$VERSION = 0.04;
+$VERSION = 0.05;
 
 use strict;
 
@@ -161,7 +161,6 @@ sub stats_table {
 		 $self->macro_recall,
 		 $self->macro_precision,
 		 $self->macro_F1,
-		 $self->macro_error,
 		 $self->micro_recall,
 		 $self->micro_precision,
 		 $self->micro_F1,
