@@ -1,6 +1,18 @@
 Revision history for Perl extension Statistics::Contingency.
 
+0.03
+
+ - Corrected some documentation errors
+
+ - Added Params::Validate to the dependency list in Makefile.PL
+
+0.02  Fri Jul 19 13:53:00 2002
+
+ - Calling add_result() will now delete any cached calculations, so you
+   can check the various metrics while you add results iteratively.
+
+
 0.01  Mon Jun 24 13:34:40 2002
-	- original version; created by h2xs 1.21 with options
+ - original version; created by h2xs 1.21 with options
 		-XA -n Statistics::Contingency
 
