@@ -5,7 +5,7 @@
 
 use strict;
 use Test;
-BEGIN { plan tests => 16 };
+BEGIN { plan tests => 22 };
 
 use Statistics::Contingency;
 
@@ -45,6 +45,22 @@ my $all_categories = [qw(sports politics finance world)];
   ok $e->micro_F1, 1/3, "micro F1";
 
   ok $e->macro_recall, 0.75, "macro recall";
-  ok $e->macro_precision, 0.625, "macro precision";
+  ok $e->macro_precision, 0.375, "macro precision";
   ok $e->macro_F1, 5/12, "macro F1";
+}
+
+{
+  my $e = new Statistics::Contingency(categories => $all_categories);
+  $e->add_result([], ['politics']);
+  ok $e->micro_recall, 0, "micro recall";
+  ok $e->micro_precision, 0, "micro precision";
+  ok $e->micro_F1, 0, "micro F1";
+}
+
+{
+  my $e = new Statistics::Contingency(categories => $all_categories);
+  $e->add_result([], []);
+  ok $e->micro_recall, 1, "micro recall";
+  ok $e->micro_precision, 1, "micro precision";
+  ok $e->micro_F1, 1, "micro F1";
 }
