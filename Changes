@@ -6,6 +6,10 @@ Revision history for Perl extension Statistics::Contingency.
    significant digits in all data elements, or however many is
    specified as an argument to the method.
 
+ - Added a note in the documentation pointing out the fact that
+   micro_accuracy is always equal to macro_accuracy, and micro_error
+   is always equal to macro_error.
+
 0.05  Wed Oct 30 18:47:17 AEST 2002
 
  - Since miE and maE are the same, don't print both in the
