@@ -1,0 +1,6 @@
+Revision history for Perl extension Statistics::Contingency.
+
+0.01  Mon Jun 24 13:34:40 2002
+	- original version; created by h2xs 1.21 with options
+		-XA -n Statistics::Contingency
+
