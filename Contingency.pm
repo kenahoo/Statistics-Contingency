@@ -1,5 +1,5 @@
 package Statistics::Contingency;
-$VERSION = 0.03;
+$VERSION = 0.04;
 
 use strict;
 
@@ -16,6 +16,7 @@ use strict;
 # F1 = 
 
 # Edge cases:
+#  precision(0,0,+,d) = 0
 #  precision(a,0,c,d) = 1
 #  precision(0,+,c,d) = 0
 #     recall(a,b,0,d) = 1
@@ -91,6 +92,7 @@ sub _error {
 
 sub _precision {
   my ($self, $h) = @_;
+  return 0 if $h->{c} and !$h->{a} and !$h->{b};
   return $self->_invert($h->{a}, $h->{b});
 }
   
