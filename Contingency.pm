@@ -179,11 +179,11 @@ Statistics::Contingency - Calculate precision, recall, F1, accuracy, etc.
 =head1 SYNOPSIS
 
  use Statistics::Contingency;
- my $s = new Statistics::Contingency;
+ my $s = new Statistics::Contingency(categories => \@all_categories);
  
  while (...something...) {
    ...
-   $s->add_result($assigned_labels, $correct_labels);
+   $s->add_result($assigned_categories, $correct_categories);
  }
  
  print "Micro F1: ", $s->micro_F1, "\n"; # Access a single statistic
@@ -293,7 +293,11 @@ then report on the results.
 
 =item * $e = Statistics::Contingency->new()
 
-Returns a new Experiment object.  No parameters are accepted at the moment.
+Returns a new C<Statistics::Contingency> object.  Expects a
+C<categories> parameter specifying the entire set of categories that
+may be assigned during this experiment.  Also accepts a C<verbose>
+parameter - if true, some diagnostic status information will be
+displayed when certain actions are performed.
 
 =item * $e->add_result($assigned_categories, $correct_categories, $name)
 
