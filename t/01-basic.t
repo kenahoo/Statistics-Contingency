@@ -5,7 +5,7 @@
 
 use strict;
 use Test;
-BEGIN { plan tests => 14 };
+BEGIN { plan tests => 16 };
 
 use Statistics::Contingency;
 
@@ -35,6 +35,9 @@ my $all_categories = [qw(sports politics finance world)];
   my $e = new Statistics::Contingency(categories => $all_categories);
   
   $e->add_result(['sports','finance'], ['sports']);
+  ok $e->micro_recall, 1, "micro recall";
+  ok $e->macro_recall, 1, "macro recall";
+
   $e->add_result(['sports','finance'], ['politics']);
 
   ok $e->micro_recall, 0.5, "micro recall";

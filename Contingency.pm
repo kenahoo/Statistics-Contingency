@@ -66,6 +66,9 @@ sub add_result {
     print "$name: assigned=(@{[ keys %$assigned ]}) correct=(@{[ keys %$correct ]})\n";
   }
 
+  # Clear any cached results
+  delete $self->{macro};
+
   $self->{hypotheses}++;
 }
 
