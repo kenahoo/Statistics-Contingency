@@ -1,9 +1,9 @@
 Revision history for Perl extension Statistics::Contingency.
 
-0.05
+0.05  Wed Oct 30 18:47:17 AEST 2002
 
  - Since miE and maE are the same, don't print both in the
-   stats_table() method.
+   stats_table() method.  Just call it 'Err'.
 
 0.04  Wed Sep 18 19:06:01 AEST 2002
 
