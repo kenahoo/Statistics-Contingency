@@ -152,10 +152,10 @@ sub category_stats {
 sub stats_table {
   my $self = shift;
   
-  my $out = "+---------------------------------------------------------+\n";
-  $out   .= "|   maR    maP   maF1    maE     miR    miP   miF1    miE |\n";
-  $out   .= "| %.3f  %.3f  %.3f  %.3f   %.3f  %.3f  %.3f  %.3f |\n";
-  $out   .= "+---------------------------------------------------------+\n";
+  my $out = "+---------------------------------------------------+\n";
+  $out   .= "|   maR    maP   maF1     miR    miP   miF1     Err |\n";
+  $out   .= "| %.3f  %.3f  %.3f   %.3f  %.3f  %.3f   %.3f |\n";
+  $out   .= "+---------------------------------------------------+\n";
 
   return sprintf($out,
 		 $self->macro_recall,
@@ -245,11 +245,17 @@ This measures the portion of all decisions that were correct
 decisions.  It is defined as C<(a+d)/(a+b+c+d)>.  It falls in the
 range from 0 to 1, with 1 being the best score.
 
+Note that macro-accuracy and micro-accuracy will always give the same
+number.
+
 =item * error
 
 This measures the portion of all decisions that were incorrect
 decisions.  It is defined as C<(b+c)/(a+b+c+d)>.  It falls in the
 range from 0 to 1, with 0 being the best score.
+
+Note that macro-error and micro-error will always give the same
+number.
 
 =item * precision
 
