@@ -151,23 +151,38 @@ sub category_stats {
 
 sub stats_table {
   my $self = shift;
-  
-  my $out = "+---------------------------------------------------+\n";
-  $out   .= "|   maR    maP   maF1     miR    miP   miF1     Err |\n";
-  $out   .= "| %.3f  %.3f  %.3f   %.3f  %.3f  %.3f   %.3f |\n";
-  $out   .= "+---------------------------------------------------+\n";
+  my $figs = shift || 3;
 
-  return sprintf($out,
-		 $self->macro_recall,
-		 $self->macro_precision,
-		 $self->macro_F1,
-		 $self->micro_recall,
-		 $self->micro_precision,
-		 $self->micro_F1,
-		 $self->micro_error,
-		);
+  my @data = map $self->_sig_figs($_, $figs),
+    (
+     $self->macro_recall,
+     $self->macro_precision,
+     $self->macro_F1,
+     $self->micro_recall,
+     $self->micro_precision,
+     $self->micro_F1,
+     $self->micro_error,
+    );
+  
+  my $m = 0;  # Max length of @data items
+  for (@data) {
+    $m = length() if length() > $m;
+  }
+  my $s = ' ' x ($m - 3);
+  
+  my $out = "+" . ("-" x (16 + 7*$m)) . "+\n";
+  $out   .= "|$s maR $s maP$s maF1  $s miR $s miP$s miF1  $s Err |\n";
+  $out   .= "| %${m}s  %${m}s  %${m}s   %${m}s  %${m}s  %${m}s   %${m}s |\n";
+  $out   .= "+" . ("-" x (16 + 7*$m)) . "+\n";
+
+  return sprintf($out, @data);
 }
 
+sub _sig_figs {
+  my ($self, $number, $figs) = @_;
+  my $after_point = $figs - int log($number)/log(10);
+  return sprintf "%.${after_point}f", $number;
+}
 
 1;
 
@@ -371,7 +386,9 @@ Returns the macro-averaged F1 for the data set.
 
 Returns a string combining several statistics in one graphic table.
 Since accuracy is 1 minus error, we only report error since it takes
-less space to print.
+less space to print.  An optional argument specifies the number of
+significant digits to show in the data - the default is 3 significant
+digits.
 
 =item * $e->category_stats
 
