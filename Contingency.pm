@@ -13,7 +13,7 @@ use strict;
 # accuracy = (a+d)/(a+b+c+d)
 # precision = a/(a+b)
 # recall = a/(a+c)
-# F1 = 
+# F1 = 2a/(2a + b + c)
 
 # Edge cases:
 #  precision(0,0,+,d) = 0
