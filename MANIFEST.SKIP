@@ -7,3 +7,7 @@ CVS
 ~$
 ^README$
 ^Statistics-Contingency
+^\.cvsignore
+^\.releaserc
+^_build
+^Build$
