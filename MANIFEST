@@ -1,8 +1,8 @@
+Build.PL
 Changes
 Contingency.pm
 INSTALL
-MANIFEST			This list of files
 Makefile.PL
-t/01-basic.t
-README
+MANIFEST			This list of files
 META.yml
+t/01-basic.t
