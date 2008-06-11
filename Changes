@@ -3,6 +3,8 @@ Revision history for Perl extension Statistics::Contingency.
  - Added a set_entries() method to directly set the four entries of
    the contingency table.
 
+ - Added a Build.PL as an alternative installer to the Makefile.PL.
+
 0.06  Sat Feb  8 12:18:54 CST 2003
 
  - The output of stats_table() will now auto-expand to show 3
