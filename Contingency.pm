@@ -43,6 +43,11 @@ sub new {
   return $self;
 }
 
+sub set_entries {
+  my $self = shift;
+  @{ $self }{'a', 'b', 'c', 'd'} = @_;
+}
+
 sub add_result {
   my ($self, $assigned, $correct, $name) = @_;
   my $cats_table = $self->{categories};
@@ -82,11 +87,13 @@ sub _invert {
 
 sub _accuracy {
   my $h = $_[1];
+  return 1 unless grep $h->{$_}, qw(a b c d);
   return +($h->{a} + $h->{d}) / ($h->{a} + $h->{b} + $h->{c} + $h->{d});
 }
 
 sub _error {
   my $h = $_[1];
+  return 0 unless grep $h->{$_}, qw(a b c d);
   return +($h->{b} + $h->{c}) / ($h->{a} + $h->{b} + $h->{c} + $h->{d});
 }
 
@@ -342,6 +349,13 @@ per category, as well as a table for the entire result set.  This
 means that you can't recover information about any particular single
 result from the C<Statistics::Contingency> object.
 
+=item * $e->set_entries($a, $b, $c, $d)
+
+If you don't wish to use the c<add_result()> interface, but still take
+advantage of the calculation methods and the various edge cases they
+handle, you can directly set the four elements of the contingency
+table with this method.
+
 =item * $e->micro_accuracy
 
 Returns the micro-averaged accuracy for the data set.
@@ -413,11 +427,11 @@ Or to print certain statistics for all categtories:
 
 =head1 AUTHOR
 
-Ken Williams <kenw@ee.usyd.edu.au>
+Ken Williams <kwilliams@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright 2002 Ken Williams.  All rights reserved.
+Copyright 2002-2008 Ken Williams.  All rights reserved.
 
 This distribution is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
