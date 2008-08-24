@@ -69,6 +69,10 @@ my $all_categories = [qw(sports politics finance world)];
   my $e = new Statistics::Contingency(categories => $all_categories);
   $e->add_result(['sports','finance'], ['sports']);
   print $e->stats_table;
+
+  $e = new Statistics::Contingency(categories => $all_categories);
+  $e->add_result(['sports','finance'], ['politics']);
+  print $e->stats_table;
 }
 
 {
