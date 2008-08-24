@@ -187,7 +187,7 @@ sub stats_table {
 
 sub _sig_figs {
   my ($self, $number, $figs) = @_;
-  my $after_point = $figs - int log($number)/log(10);
+  my $after_point = $figs - int ($number != 0 ? log($number)/log(10) : 0);
   return sprintf "%.${after_point}f", $number;
 }
 

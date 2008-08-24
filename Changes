@@ -1,5 +1,8 @@
 Revision history for Perl extension Statistics::Contingency.
 
+ - Fix a "can't take log of 0" error that sometimes happens when
+   printing the stats_table(). [Erik Aronesty & Jochen Leidner]
+
 0.07 - Tue Jun 10 20:44:58 2008
 
  - Added a set_entries() method to directly set the four entries of
