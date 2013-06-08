@@ -1,5 +1,9 @@
 Revision history for Perl extension Statistics::Contingency.
 
+0.09
+
+ - Converted to Git and Dist::Zilla.  Moved from Google Code to GitHub.
+
 0.08 - Sat Aug 23 22:20:30 2008
 
  - Fix a "can't take log of 0" error that sometimes happens when

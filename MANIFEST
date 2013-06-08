@@ -1,9 +1,0 @@
-Build.PL
-Changes
-Contingency.pm
-INSTALL
-Makefile.PL
-MANIFEST			This list of files
-META.yml
-t/01-basic.t
-README

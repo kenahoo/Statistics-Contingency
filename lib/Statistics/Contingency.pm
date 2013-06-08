@@ -1,7 +1,6 @@
-package Statistics::Contingency;
-$VERSION = '0.08';
-
 use strict;
+
+package Statistics::Contingency;
 
 #              Correct=Y   Correct=N
 #            +-----------+-----------+
