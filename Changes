@@ -1,6 +1,6 @@
 Revision history for Perl extension Statistics::Contingency.
 
-0.09
+0.09 - Sat Jun  8 22:39:02 CDT 2013
 
  - Converted to Git and Dist::Zilla.  Moved from Google Code to GitHub.
 
